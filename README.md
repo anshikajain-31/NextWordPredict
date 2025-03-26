@@ -1,82 +1,75 @@
-NextWordPredict
+# NextWordPredict
 
-Overview
+## Overview
+NextWordPredict is a word prediction model that utilizes **Long Short-Term Memory (LSTM)** networks to predict the next word in a sequence. This project focuses on:
+- **Sequence preprocessing**
+- **Model tuning**
+- **Evaluation for accurate text predictions**
 
-NextWordPredict is a word prediction model that utilizes Long Short-Term Memory (LSTM) networks to predict the next word in a sequence. The project focuses on sequence preprocessing, model tuning, and evaluation to achieve accurate text predictions.
+## Technologies Used
+- **Python**
+- **TensorFlow**
+- **Keras**
+- **LSTM**
 
-Technologies Used
+## Dataset
+The model is trained on a set of frequently asked questions (FAQs) from an educational course platform. The text data is tokenized and transformed into sequences for training.
 
-Python
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/NextWordPredict.git
+   cd NextWordPredict
+   ```
+2. Install dependencies:
+   ```bash
+   pip install tensorflow numpy
+   ```
 
-TensorFlow
+## Model Architecture
+The model consists of:
+- **Embedding Layer**: Converts words into dense vector representations.
+- **LSTM Layer**: Captures contextual dependencies in the text.
+- **Dense Layer**: Uses softmax activation for predicting the next word.
 
-Keras
+## Training the Model
+The training pipeline includes:
+1. **Tokenizing text**: Using Keras' `Tokenizer`.
+2. **Creating input sequences**: Extracting n-grams from the text.
+3. **Padding sequences**: Ensuring uniform input length.
+4. **Building the LSTM model**: Training with categorical cross-entropy loss.
+5. **Fitting the model**: Running for 100 epochs with Adam optimizer.
 
-LSTM
+Run the training script:
+```python
+python train.py
+```
 
-NumPy
+## Predicting the Next Word
+The model predicts the next word in a sequence based on prior words. Example usage:
+```python
+text = "total duration"
+for i in range(10):
+    token_text = tokenizer.texts_to_sequences([text])[0]
+    padded_token_text = pad_sequences([token_text], maxlen=56, padding='pre')
+    pos = np.argmax(model.predict(padded_token_text))
+    for word, index in tokenizer.word_index.items():
+        if index == pos:
+            text = text + " " + word
+            print(text)
+            break
+```
 
-Features
+## Results
+The model generates reasonable predictions for next-word completion based on FAQ data. Improvements can be made by training on a larger, more diverse dataset.
 
-Tokenizes input text and converts it into sequences
+## Future Work
+- Implement **beam search** for better word predictions.
+- Train on **larger datasets** for improved accuracy.
+- Fine-tune using **pre-trained language models**.
 
-Pads sequences to maintain uniform input length
+## Contributors
+- **Anshika Jain** (Developer)
 
-Trains an LSTM-based model on provided text data
-
-Predicts the next word based on input sequences
-
-Installation
-
-To set up the project, follow these steps:
-
-Clone the repository:
-
-git clone <repository-url>
-cd NextWordPredict
-
-Install required dependencies:
-
-pip install -r requirements.txt
-
-Usage
-
-Run the script to train the model and generate word predictions:
-
-python next_word_predict.py
-
-Example Prediction:
-
-After training, you can input a phrase, and the model will predict the next word.
-
-Input: "total duration"
-Output: "of"
-
-Model Architecture
-
-Embedding Layer: Converts words into dense vectors
-
-LSTM Layer: Captures sequential dependencies in text
-
-Dense Layer: Produces probability distribution over vocabulary
-
-Training
-
-The model is trained using categorical cross-entropy loss with the Adam optimizer.
-
-The dataset used is based on frequently asked questions (FAQs).
-
-Future Improvements
-
-Expand the dataset for improved predictions
-
-Implement bidirectional LSTM for better accuracy
-
-Use pre-trained word embeddings for enhanced learning
-
-License
-
+## License
 This project is licensed under the MIT License.
-
-For any questions or contributions, feel free to open an issue or submit a pull request.
-
